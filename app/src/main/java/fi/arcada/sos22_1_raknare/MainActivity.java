@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView outputText;
     EditText inputText;
+
+    double[] values = {1, 2.5, 3.5, 9};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,13 +22,14 @@ public class MainActivity extends AppCompatActivity {
         outputText = findViewById(R.id.outputText);
         inputText = findViewById(R.id.editTextName);
 
-        outputText.setText("-");
+        outputText.setText("...");
     }
 
     public void buttonHandler(View view) {
         //Avläser text fältet och omvandlar editable objektet till en string
         String namn = inputText.getText().toString();
-        outputText.setText("Hej " + namn);
+
+        outputText.setText(String.format("Medelvärde: %.2f", Statistics.calculate(values)));
     }
 
 }
