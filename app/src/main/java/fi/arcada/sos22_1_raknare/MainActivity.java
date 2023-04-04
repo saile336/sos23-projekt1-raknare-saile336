@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         //Avläser text fältet och omvandlar editable objektet till en string
         String namn = inputText.getText().toString();
 
-        outputText.setText(String.format("Medelvärde: %.2f", Statistics.calculate(values)));
+        outputText.setText(String.format("Medelvärde: %.2f", Statistics.calculateMean(values)));
     }
 
 }
