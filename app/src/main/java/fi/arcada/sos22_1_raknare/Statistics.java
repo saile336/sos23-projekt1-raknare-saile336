@@ -1,36 +1,49 @@
 package fi.arcada.sos22_1_raknare;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Statistics {
 
-    public static String greet(){
+    public static String greet() {
         return "Hej";
     }
 
-    public static double calculateMean(double[] values){
-        int amount = values.length;
+    public static double calculateMean(ArrayList<Double> values) {
         double sum = 0;
-        for(int i = 0; i<amount; i++){
-            sum += values[i];
+        for (int i = 0; i < values.size(); i++) {
+            sum += values.get(i);
         }
-        double mean = sum/amount;
-        return mean;
+        return sum / values.size();
     }
 
-    public static double calculateMedian(double[] values){
-        int amount = values.length;
-        Arrays.sort(values);
-        int i = 0;
-        double sum = 0;
-        if(amount%2 == 0) {
-            sum = (values[amount/2] + values[amount/2-1]) / 2;
+    public static ArrayList<Double> sortValues(ArrayList<Double> values) {
+        ArrayList<Double> sorted = new ArrayList<>(values);
+        Collections.sort(sorted);
+
+        return sorted;
+    }
+
+    public static double calculateMedian(ArrayList<Double> values) {
+        ArrayList<Double> sorted = sortValues(values);
+        int amount = sorted.size();
+        if (amount % 2 == 0) {
+            double sum = (sorted.get(amount / 2) + sorted.get(amount / 2 - 1)) / 2;
+            return sum;
+        } else {
+            double sum = sorted.get((amount + 1) / 2 - 1);
             return sum;
         }
-        else{
-            sum = values[(amount+1)/2-1];
-            return sum;
+    }
+
+    public static double calculateSD(ArrayList<Double> values) {
+        double stDev = 0;
+        double mean = calculateMean(values);
+        for (double value : values) {
+            stDev += Math.pow(value - mean, 2);
         }
+        return Math.sqrt(stDev / values.size());
     }
 }
 
