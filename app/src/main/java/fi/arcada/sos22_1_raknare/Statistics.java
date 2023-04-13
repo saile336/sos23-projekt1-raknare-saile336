@@ -40,13 +40,13 @@ public class Statistics {
     public static double calculateMedian(ArrayList<Double> values) {
         ArrayList<Double> sorted = sortValues(values);
         int amount = sorted.size();
+        double sum;
         if (amount % 2 == 0) {
-            double sum = (sorted.get(amount / 2) + sorted.get(amount / 2 - 1)) / 2;
-            return sum;
+            sum = (sorted.get(amount / 2) + sorted.get(amount / 2 - 1)) / 2;
         } else {
-            double sum = sorted.get((amount + 1) / 2 - 1);
-            return sum;
+            sum = sorted.get((amount + 1) / 2 - 1);
         }
+        return sum;
     }
 
     public static double calculateSD(ArrayList<Double> values) {
