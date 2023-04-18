@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,8 +16,9 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     TextView outputText;
-    EditText inputText;
+    EditText inputText, inputValue;
     RecyclerView recyclerView;
+    CustomAdapter adapter;
 
     ArrayList<DataItem> dataItems = new ArrayList<>();
     ArrayList<Double> values = new ArrayList<>();
@@ -26,41 +28,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dataItems = Statistics.getSampleData();
-
-        for (DataItem item : Statistics.getSampleData()) {
-            values.add(item.getValue());
-        }
-
         //Koppling mellan XML layout och koden
         outputText = findViewById(R.id.outputText);
         inputText = findViewById(R.id.editTextName);
+        inputValue = findViewById(R.id.dataValue);
         recyclerView = findViewById(R.id.dataItemsRecyclerView);
 
-        CustomAdapter adapter = new CustomAdapter(this, dataItems);
+        adapter = new CustomAdapter(this, dataItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //HashMap-exempel
-        HashMap<String, Double> cities = new HashMap<>();
-        cities.put("Helsingfors", 658457.0);
-        cities.put("Esbo", 297132.0);
-
-        HashMap<String, DataItem> cityItems = new HashMap<>();
-        cityItems.put("sbo", new DataItem("Esbo", 297132.0));
-
-
-        outputText.setText("...");
     }
 
     public void buttonHandler(View view) {
-        //Avläser text fältet och omvandlar editable objektet till en string
-        String namn = inputText.getText().toString();
 
-        outputText.setText(String.format("Medelvärde: %.2f\nMedian: %.2f\nStandardavvikelse: %.2f",
-                Statistics.calculateMean(values),
-                Statistics.calculateMedian(values),
-                Statistics.calculateSD(values)
+        if (TextUtils.isEmpty(inputValue.getText())) return;
+
+        dataItems.add(new DataItem(inputText.getText().toString(),
+                Double.parseDouble(inputValue.getText().toString())));
+
+        // Uppdatera recyclerView:en
+        adapter.notifyDataSetChanged();
+
+        // Skapa values-arraylist med endast värden
+        ArrayList<Double> values = new ArrayList<>();
+        for (DataItem item: dataItems) {
+            values.add(item.getValue());
+        }
+
+        // Kolla att det finns tillräckligt med värden att räkna ut
+        if (values.size() < 3) {
+            outputText.setText("Mera data behövs...");
+            return;
+        }
+
+        outputText.setText(String.format("Min värde: %.2f\nMax värde: %.2f\nMedelvärde: %.2f\nMedian: %.2f\nTypvärde: %.2f\nStandardavvikelse: %.2f",
+                Statistics.calcMin(values),
+                Statistics.calcMax(values),
+                Statistics.calcAverage(values),
+                Statistics.calcMedian(values),
+                Statistics.calcMode(values),
+                Statistics.calcStDev(values)
         ));
     }
 }

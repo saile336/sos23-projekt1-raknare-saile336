@@ -19,12 +19,12 @@
 
     <EditText
         android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="142dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
-        android:hint="Skriv ditt namn"
+        android:hint="Namn"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,19 +33,29 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:onClick="buttonHandler"
         android:text="OK"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextName"
-        app:layout_constraintStart_toEndOf="@+id/editTextName"
-        app:layout_constraintTop_toTopOf="@+id/editTextName" />
+        app:layout_constraintBottom_toBottomOf="@+id/dataValue"
+        app:layout_constraintStart_toEndOf="@+id/dataValue"
+        app:layout_constraintTop_toTopOf="@+id/dataValue" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataItemsRecyclerView"
-        android:layout_width="342dp"
-        android:layout_height="426dp"
+        android:layout_width="397dp"
+        android:layout_height="340dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/dataValue"
+        android:layout_width="92dp"
+        android:layout_height="47dp"
+        android:ems="10"
+        android:hint="Ålder"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextName"
+        app:layout_constraintStart_toEndOf="@+id/editTextName"
+        app:layout_constraintTop_toTopOf="@+id/editTextName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

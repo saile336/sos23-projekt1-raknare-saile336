@@ -4,6 +4,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Statistics {
 
@@ -18,18 +19,6 @@ public class Statistics {
         return dataItems;
     }
 
-    public static String greet() {
-        return "Hej";
-    }
-
-    public static double calculateMean(ArrayList<Double> values) {
-        double sum = 0;
-        for (int i = 0; i < values.size(); i++) {
-            sum += values.get(i);
-        }
-        return sum / values.size();
-    }
-
     public static ArrayList<Double> sortValues(ArrayList<Double> values) {
         ArrayList<Double> sorted = new ArrayList<>(values);
         Collections.sort(sorted);
@@ -37,7 +26,29 @@ public class Statistics {
         return sorted;
     }
 
-    public static double calculateMedian(ArrayList<Double> values) {
+    public static double calcMin(ArrayList<Double> values) {
+        ArrayList<Double> sorted = sortValues(values);
+        return sorted.get(0);
+    }
+
+    public static double calcMax(ArrayList<Double> values) {
+        double max = 0;
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i) > max) max = values.get(i);
+        }
+
+        return max;
+    }
+
+    public static double calcAverage(ArrayList<Double> values) {
+        double sum = 0;
+        for (int i = 0; i < values.size(); i++) {
+            sum += values.get(i);
+        }
+        return sum / values.size();
+    }
+
+    public static double calcMedian(ArrayList<Double> values) {
         ArrayList<Double> sorted = sortValues(values);
         int amount = sorted.size();
         double sum;
@@ -49,14 +60,48 @@ public class Statistics {
         return sum;
     }
 
-    public static double calculateSD(ArrayList<Double> values) {
+    public static double calcMode(ArrayList<Double> values) {
+        HashMap<Double, Integer> valueCount = new HashMap<>();
+
+        for (double dataValue : values) {
+            Integer count = valueCount.get(dataValue);
+
+            if (count == null) count = 0;
+            valueCount.put(dataValue, count + 1);
+        }
+
+        int maxCount = 0;
+        double modeValue = 0.0;
+
+        for (Double dataValue : valueCount.keySet()) {
+            Integer curCount = valueCount.get(dataValue);
+
+            if (curCount > maxCount) {
+                maxCount = curCount;
+                modeValue = dataValue;
+            }
+        }
+        return modeValue;
+    }
+
+    public static double calcStDev(ArrayList<Double> values) {
         double stDev = 0;
-        double mean = calculateMean(values);
+        double mean = calcAverage(values);
         for (double value : values) {
             stDev += Math.pow(value - mean, 2);
         }
         return Math.sqrt(stDev / values.size());
     }
+
+    public static double calcLQ(ArrayList<Double> values) {
+        ArrayList<Double> sorted = sortValues(values);
+        int amount = sorted.size();
+        if (sorted.get(amount) % 0 == 0) {
+
+        }
+        return 0;
+    }
 }
+
 
 
