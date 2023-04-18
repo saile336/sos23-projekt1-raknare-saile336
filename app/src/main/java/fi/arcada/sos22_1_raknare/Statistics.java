@@ -55,7 +55,7 @@ public class Statistics {
         if (amount % 2 == 0) {
             sum = (sorted.get(amount / 2) + sorted.get(amount / 2 - 1)) / 2;
         } else {
-            sum = sorted.get((amount + 1) / 2 - 1);
+            sum = sorted.get((amount - 1) / 2);
         }
         return sum;
     }
@@ -95,11 +95,34 @@ public class Statistics {
 
     public static double calcLQ(ArrayList<Double> values) {
         ArrayList<Double> sorted = sortValues(values);
-        int amount = sorted.size();
-        if (sorted.get(amount) % 0 == 0) {
+        int middle = sorted.size() / 2;
 
+        ArrayList<Double> halfArr = new ArrayList<>();
+
+        for (int i = 0; i < middle; i++) {
+            halfArr.add(sorted.get(i));
         }
-        return 0;
+
+        return calcMedian(halfArr);
+    }
+
+    public static double calcUQ(ArrayList<Double> values) {
+        ArrayList<Double> sorted = sortValues(values);
+        int middle = sorted.size() / 2;
+
+        ArrayList<Double> halfArr = new ArrayList<>();
+
+        if (sorted.size() % 2 != 0) middle += 1;
+
+        for (int i = middle; i < sorted.size(); i++) {
+            halfArr.add(sorted.get(i));
+        }
+
+        return calcMedian(halfArr);
+    }
+
+    public static double calcQR(ArrayList<Double> values){
+        return calcUQ(values) - calcLQ(values);
     }
 }
 

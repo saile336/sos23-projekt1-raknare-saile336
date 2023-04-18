@@ -13,7 +13,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
         android:text="--"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/editTextName"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
@@ -41,8 +41,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataItemsRecyclerView"
-        android:layout_width="397dp"
-        android:layout_height="340dp"
+        android:layout_width="408dp"
+        android:layout_height="355dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

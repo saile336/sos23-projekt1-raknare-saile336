@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     CustomAdapter adapter;
 
     ArrayList<DataItem> dataItems = new ArrayList<>();
-    ArrayList<Double> values = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +55,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Kolla att det finns tillräckligt med värden att räkna ut
-        if (values.size() < 3) {
+        if (values.size() < 4) {
             outputText.setText("Mera data behövs...");
             return;
         }
 
-        outputText.setText(String.format("Min värde: %.2f\nMax värde: %.2f\nMedelvärde: %.2f\nMedian: %.2f\nTypvärde: %.2f\nStandardavvikelse: %.2f",
+        outputText.setText(String.format("Min värde: %.2f\nMax värde: %.2f\nMedelvärde: %.2f\nMedian: %.2f\nTypvärde: %.2f\nStandardavvikelse: %.2f\nNedre kvartil: %.2f\nÖvre kvartil: %.2f\nInre kvartilavstånd: %.2f",
                 Statistics.calcMin(values),
                 Statistics.calcMax(values),
                 Statistics.calcAverage(values),
                 Statistics.calcMedian(values),
                 Statistics.calcMode(values),
-                Statistics.calcStDev(values)
+                Statistics.calcStDev(values),
+                Statistics.calcLQ(values),
+                Statistics.calcUQ(values),
+                Statistics.calcQR(values)
         ));
     }
 }
